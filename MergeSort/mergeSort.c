@@ -2,45 +2,47 @@
 
 int tamanho = 9;
 
-void merge_sort(int vetor[],int ini,int fim) {
-    int meio,i,j,k,aux[tamanho];
+void merge_sort(int array[], int inicio, int fim) {
+    int meio, esquerdo, direito,k, aux[tamanho];
 
-    if(ini < fim) {
-        meio = (ini+fim) / 2;
-        merge_sort(vetor,ini,meio);
-        merge_sort(vetor,meio + 1,fim);
+    if (inicio < fim) {
+        meio = (inicio + fim) / 2;
+        merge_sort(array, inicio, meio);
+        merge_sort(array, meio + 1, fim);
 
-        // faz o merge ordenando os elementos
-        i = ini;
-        j = meio+1;
-        k = ini;
+        // Faz o merge ordenando os elementos
+        esquerdo = inicio;
+        direito = meio + 1;
+        k = inicio;
 
-        while(i <= meio && j <= fim) {
-            if(vetor[i] < vetor[j]) {
-                aux[k] = vetor[i];
-                i++;
+        while (esquerdo <= meio && direito <= fim) {
+            if (array[esquerdo] < array[direito]) {
+                aux[k] = array[esquerdo];
+                esquerdo++;
+            } else {
+                aux[k] = array[direito];
+                direito++;
             }
-            else {
-                aux[k] = vetor[j];
-                j++;
-            }
             k++;
         }
 
-        while(i <= meio) {
-            aux[k] = vetor[i];
-            i++;
+        // Adiciona os elementos restantes da metade esquerda
+        while (esquerdo <= meio) {
+            aux[k] = array[esquerdo];
+            esquerdo++;
             k++;
         }
 
-        while(j <= fim) {
-            aux[k] = vetor[j];
-            j++;
+        // Adiciona os elementos restantes da metade direita
+        while (direito <= fim) {
+            aux[k] = array[direito];
+            direito++;
             k++;
         }
 
-        for(int i = ini;i <= fim;i++) {
-            vetor[i] = aux[i];
+        // Copia os elementos ordenados de volta para o array original
+        for (int i = inicio; i <= fim; i++) {
+            array[i] = aux[i];
         }
     }
 }
@@ -59,7 +61,6 @@ int main() {
 
     printf("Vetor não ordenado: ");
     imprimir(vetor);
-
 
     printf("\nVetor ordenado: ");
     merge_sort(vetor,0,tamanho-1);
